@@ -17,9 +17,7 @@ elif [ "$1" == "build" ]; then
         --volume "$( realpath ./bin )":/openwrt/bin \
         --volume "$( realpath ./dl )":/openwrt/dl \
         --volume "$( realpath ./configdir )":/openwrt/configdir \
-        openwrt-compile:latest "make defconfig && make V=s -j4"
-    #    --volume openwrt_build_dir:/openwrt/build_dir \
-    #    --volume openwrt_staging_dir:/openwrt/staging_dir \
+        openwrt-compile:latest "make defconfig && make V=s -j"
 
 elif [ "$1" == "build1" ]; then
     docker run --interactive --tty --rm \
