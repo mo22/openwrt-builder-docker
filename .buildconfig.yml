@@ -1,0 +1,20 @@
+root: true
+
+targets:
+    'build docker image':
+        cmd: |
+            docker build --tag openwrt-builder-docker:latest .
+
+    'make menuconfig':
+        cmd: |
+            docker run --interactive --tty --rm \
+                --volume "$( realpath . )":/openwrt/configdir \
+                openwrt-builder-docker:latest "make menuconfig V=s"
+
+    'make':
+        cmd: |
+            docker run --interactive --tty --rm \
+                --volume "$( realpath ./bin )":/openwrt/bin \
+                --volume "$( realpath ./dl )":/openwrt/dl \
+                --volume "$( realpath . )":/openwrt/configdir \
+                openwrt-builder-docker:latest "make defconfig && make V=s -j"
